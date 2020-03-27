@@ -33,5 +33,5 @@ public class Task {
     private User author;
 
     @DBRef
-    private List<User> users = new LinkedList<>();
+    private List<User> usersWithAccess = new LinkedList<>();
 }
