@@ -1,0 +1,63 @@
+package com.protsak.service.implementation;
+
+import com.protsak.dto.UserRegistrationDto;
+import com.protsak.entity.User;
+import com.protsak.exception.ExceptionMessage;
+import com.protsak.exception.InvalidEmailException;
+import com.protsak.exception.InvalidPasswordException;
+import com.protsak.exception.UserAlreadyExistException;
+import com.protsak.mapper.UserRegistrationMapper;
+import com.protsak.repository.UserRepository;
+import com.protsak.security.JWTUser;
+import com.protsak.service.UserService;
+import com.protsak.utils.Validator;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
+    private UserRepository userRepository;
+    private UserRegistrationMapper userRegistrationMapper;
+    private Validator validator;
+
+    public UserServiceImpl(UserRepository userRepository, UserRegistrationMapper userRegistrationMapper, Validator validator) {
+        this.userRepository = userRepository;
+        this.userRegistrationMapper = userRegistrationMapper;
+        this.validator = validator;
+    }
+
+    public void registration(UserRegistrationDto userRegistrationDto) {
+        if (!validator.validateEmail(userRegistrationDto.getEmail())) {
+            throw new InvalidEmailException(ExceptionMessage.INVALID_EMAIL);
+        }
+        if (!validator.validatePassword(userRegistrationDto.getPassword())) {
+            throw new InvalidPasswordException(ExceptionMessage.INVALID_PASSWORD);
+        }
+        if (!(userRepository.findUserByEmail(userRegistrationDto.getEmail()) == null)) {
+            throw new UserAlreadyExistException(ExceptionMessage.USER_ALREADY_EXIST
+                    + userRegistrationDto.getEmail()
+                    + "!!!");
+        }
+        User user = userRegistrationMapper.convertToEntity(userRegistrationDto);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        JWTUser jwtUser = (JWTUser) authentication.getPrincipal();
+        return jwtUser.getUser();
+    }
+
+    public boolean checkPasswordMatches(String id, String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        User user = userRepository.findUserById(id);
+        return encoder.matches(password, user.getPassword());
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+}
