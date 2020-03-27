@@ -25,6 +25,7 @@ public class TaskMapper {
                 .title(model.getTitle())
                 .description(model.getDescription())
                 .dateTime(model.getDateTime())
+                .usersWithAccess(model.getUsersWithAccess())
                 .build();
 
     }
