@@ -4,7 +4,7 @@ package com.protsak.controller;
 import com.protsak.dto.AuthenticationDto;
 import com.protsak.entity.User;
 import com.protsak.exception.ConstantMessage;
-import com.protsak.exception.IncorrectPasswordException;
+import com.protsak.exception.InvalidPasswordException;
 import com.protsak.exception.NotFoundException;
 import com.protsak.security.CookieProvider;
 import com.protsak.security.JWTTokenProvider;
@@ -46,7 +46,7 @@ public class AuthenticationController {
                         jwtTokenProvider.generateToken(user.getId(), user.getEmail()));
                 response.addCookie(cookie);
             } else {
-                throw new IncorrectPasswordException(ConstantMessage.INCORRECT_PASSWORD);
+                throw new InvalidPasswordException(ConstantMessage.INCORRECT_PASSWORD);
             }
         } else {
             throw new NotFoundException(ConstantMessage.USER_NOT_FOUND_BY_EMAIL);
