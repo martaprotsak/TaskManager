@@ -2,7 +2,7 @@ package com.protsak.service.implementation;
 
 import com.protsak.dto.UserRegistrationDto;
 import com.protsak.entity.User;
-import com.protsak.exception.ExceptionMessage;
+import com.protsak.exception.ConstantMessage;
 import com.protsak.exception.InvalidEmailException;
 import com.protsak.exception.InvalidPasswordException;
 import com.protsak.exception.UserAlreadyExistException;
@@ -32,13 +32,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registration(UserRegistrationDto userRegistrationDto) {
         if (!validator.validateEmail(userRegistrationDto.getEmail())) {
-            throw new InvalidEmailException(ExceptionMessage.INVALID_EMAIL);
+            throw new InvalidEmailException(ConstantMessage.INVALID_EMAIL);
         }
         if (!validator.validatePassword(userRegistrationDto.getPassword())) {
-            throw new InvalidPasswordException(ExceptionMessage.INVALID_PASSWORD);
+            throw new InvalidPasswordException(ConstantMessage.INVALID_PASSWORD);
         }
         if (!(userRepository.findUserByEmail(userRegistrationDto.getEmail()) == null)) {
-            throw new UserAlreadyExistException(ExceptionMessage.USER_ALREADY_EXIST
+            throw new UserAlreadyExistException(ConstantMessage.USER_ALREADY_EXIST
                     + userRegistrationDto.getEmail()
                     + "!!!");
         }

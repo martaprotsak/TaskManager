@@ -1,6 +1,6 @@
 package com.protsak.security;
 
-import com.protsak.exception.ExceptionMessage;
+import com.protsak.exception.ConstantMessage;
 import com.protsak.exception.JwtAuthenticationException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class JWTTokenProvider {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         }catch(JwtException | IllegalArgumentException e){
-            throw new JwtAuthenticationException(ExceptionMessage.JWT_TOKEN_IS_EXPIRED);
+            throw new JwtAuthenticationException(ConstantMessage.JWT_TOKEN_IS_EXPIRED);
         }
     }
 

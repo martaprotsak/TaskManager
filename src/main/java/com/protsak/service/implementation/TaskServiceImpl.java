@@ -1,10 +1,11 @@
 package com.protsak.service.implementation;
 
 import com.protsak.dto.NewTaskDto;
+import com.protsak.dto.ShareTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 import com.protsak.entity.User;
-import com.protsak.exception.ExceptionMessage;
+import com.protsak.exception.ConstantMessage;
 import com.protsak.exception.NotFoundException;
 import com.protsak.mapper.TaskMapper;
 import com.protsak.repository.TaskRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -45,7 +47,24 @@ public class TaskServiceImpl implements TaskService {
             task.setTitle(taskDto.getTitle());
             return taskMapper.convertToDto(taskRepository.save(task));
         } else {
-            throw new NotFoundException(ExceptionMessage.TASK_NOT_FOUND);
+            throw new NotFoundException(ConstantMessage.TASK_NOT_FOUND);
         }
+    }
+
+    @Override
+    public String share(ShareTaskDto dto) {
+        Task task = taskRepository.findByIdAndUsersWithAccessContaining(dto.getId(), userService.getCurrentUser());
+        if (task != null) {
+
+            User newUser = userService.findUserByEmail(dto.getEmail());
+            if(newUser == null) return ConstantMessage.USER_NOT_FOUND_BY_EMAIL + dto.getEmail();
+
+            List<User> userList = task.getUsersWithAccess();
+            userList.add(newUser);
+            task.setUsersWithAccess(userList);
+            taskRepository.save(task);
+            return ConstantMessage.TASK_WAS_ADDED + dto.getEmail();
+        }
+        return ConstantMessage.TASK_NOT_FOUND;
     }
 }
