@@ -1,4 +1,4 @@
-package com.protsak.exception;
+package com.protsak.utils;
 
 public class ConstantMessage {
 

@@ -1,6 +1,6 @@
 package com.protsak.security;
 
-import com.protsak.exception.ConstantMessage;
+import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.JwtAuthenticationException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;

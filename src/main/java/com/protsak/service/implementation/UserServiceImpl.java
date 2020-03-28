@@ -2,7 +2,7 @@ package com.protsak.service.implementation;
 
 import com.protsak.dto.UserRegistrationDto;
 import com.protsak.entity.User;
-import com.protsak.exception.ConstantMessage;
+import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.InvalidEmailException;
 import com.protsak.exception.InvalidPasswordException;
 import com.protsak.exception.UserAlreadyExistException;

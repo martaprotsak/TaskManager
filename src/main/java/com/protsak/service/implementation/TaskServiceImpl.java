@@ -6,7 +6,7 @@ import com.protsak.dto.ShowTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 import com.protsak.entity.User;
-import com.protsak.exception.ConstantMessage;
+import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.NotFoundException;
 import com.protsak.mapper.ShowTaskMapper;
 import com.protsak.mapper.TaskMapper;
@@ -49,6 +49,7 @@ public class TaskServiceImpl implements TaskService {
         if (task != null) {
             task.setDescription(taskDto.getDescription());
             task.setTitle(taskDto.getTitle());
+            task.setDateTime(LocalDateTime.now());
             return taskMapper.convertToDto(taskRepository.save(task));
         } else {
             throw new NotFoundException(ConstantMessage.TASK_NOT_FOUND);
@@ -61,7 +62,9 @@ public class TaskServiceImpl implements TaskService {
         if (task != null) {
 
             User newUser = userService.findUserByEmail(dto.getEmail());
-            if (newUser == null) return ConstantMessage.USER_NOT_FOUND_BY_EMAIL + dto.getEmail();
+            if (newUser == null) {
+                throw new NotFoundException(ConstantMessage.USER_NOT_FOUND_BY_EMAIL + dto.getEmail());
+            }
 
             List<User> userList = task.getUsersWithAccess();
             userList.add(newUser);
@@ -69,7 +72,7 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.save(task);
             return ConstantMessage.TASK_WAS_ADDED + dto.getEmail();
         }
-        return ConstantMessage.TASK_NOT_FOUND;
+        throw new NotFoundException(ConstantMessage.TASK_NOT_FOUND);
     }
 
     @Override
@@ -80,11 +83,12 @@ public class TaskServiceImpl implements TaskService {
             if (userList.size() > 1) {
                 userList.remove(userService.getCurrentUser());
                 task.setUsersWithAccess(userList);
+                task.setDateTime(LocalDateTime.now());
                 taskRepository.save(task);
             } else taskRepository.delete(task);
             return ConstantMessage.TASK_WAS_DELETED;
         }
-        return ConstantMessage.TASK_NOT_FOUND;
+        throw new NotFoundException(ConstantMessage.TASK_NOT_FOUND);
     }
 
     @Override
