@@ -48,6 +48,4 @@ public class TaskServiceImpl implements TaskService {
             throw new NotFoundException(ExceptionMessage.TASK_NOT_FOUND);
         }
     }
-
-
 }
