@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ShareTaskDto {
 
-    private String id;
+    private String title;
 
     private String email;
 }

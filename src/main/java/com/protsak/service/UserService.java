@@ -5,7 +5,7 @@ import com.protsak.entity.User;
 
 public interface UserService {
 
-    User findUserByEmail (String email);
+    User findUserByEmail(String email);
 
     boolean checkPasswordMatches(String id, String password);
 

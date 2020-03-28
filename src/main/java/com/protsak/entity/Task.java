@@ -1,5 +1,6 @@
 package com.protsak.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.util.List;
 @Document(collection = "Task")
 public class Task {
     @Id
+    @JsonIgnore
     private String id;
 
     private String title;
