@@ -30,7 +30,7 @@ public class TaskController {
         return taskService.save(newTaskDto);
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public TaskDto update(@RequestBody TaskDto taskDto) {
         return taskService.edit(taskDto);
     }
