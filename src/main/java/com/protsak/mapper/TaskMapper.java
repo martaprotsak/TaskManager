@@ -1,9 +1,12 @@
 package com.protsak.mapper;
 
 import com.protsak.dto.NewTaskDto;
+import com.protsak.dto.ShowTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class TaskMapper {
