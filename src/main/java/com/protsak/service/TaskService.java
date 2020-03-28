@@ -3,7 +3,6 @@ package com.protsak.service;
 import com.protsak.dto.NewTaskDto;
 import com.protsak.dto.ShareTaskDto;
 import com.protsak.dto.TaskDto;
-import com.protsak.entity.Task;
 
 public interface TaskService {
 
@@ -12,4 +11,6 @@ public interface TaskService {
      TaskDto edit(TaskDto taskDto);
 
      String share(ShareTaskDto dto);
+
+     String delete(String id);
 }
