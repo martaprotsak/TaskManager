@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private UserRepository userRepository;
     private UserRegistrationMapper userRegistrationMapper;
     private Validator validator;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
         this.validator = validator;
     }
 
+    @Override
     public void registration(UserRegistrationDto userRegistrationDto) {
         if (!validator.validateEmail(userRegistrationDto.getEmail())) {
             throw new InvalidEmailException(ExceptionMessage.INVALID_EMAIL);
@@ -45,18 +47,21 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JWTUser jwtUser = (JWTUser) authentication.getPrincipal();
         return jwtUser.getUser();
     }
 
+    @Override
     public boolean checkPasswordMatches(String id, String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User user = userRepository.findUserById(id);
         return encoder.matches(password, user.getPassword());
     }
 
+    @Override
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }

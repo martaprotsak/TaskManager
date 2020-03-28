@@ -23,4 +23,9 @@ public class TaskController {
     public TaskDto save(@RequestBody NewTaskDto newTaskDto) {
         return taskService.save(newTaskDto);
     }
+
+    @PostMapping("/update")
+    public TaskDto update(@RequestBody TaskDto taskDto) {
+        return taskService.edit(taskDto);
+    }
 }
