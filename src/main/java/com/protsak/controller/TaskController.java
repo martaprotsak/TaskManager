@@ -1,8 +1,6 @@
 package com.protsak.controller;
 
-import com.protsak.dto.NewTaskDto;
 import com.protsak.dto.ShareTaskDto;
-import com.protsak.dto.ShowTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.service.TaskService;
 import com.protsak.service.UserService;
@@ -26,11 +24,11 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDto save(@RequestBody NewTaskDto newTaskDto) {
-        return taskService.save(newTaskDto);
+    public TaskDto save(@RequestBody TaskDto taskDto) {
+        return taskService.save(taskDto);
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public TaskDto update(@RequestBody TaskDto taskDto) {
         return taskService.edit(taskDto);
     }
@@ -46,7 +44,7 @@ public class TaskController {
     }
 
     @GetMapping("/all")
-    public List<ShowTaskDto> showAllTasks(){
+    public List<TaskDto> showAllTasks() {
         return taskService.taskList(userService.getCurrentUser());
     }
 }

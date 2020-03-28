@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TaskRepository extends MongoRepository<Task, String> {
 
-    Task findByIdAndUsersWithAccessContaining(String id, User user);
+    Task findByTitleAndUsersWithAccessContaining(String title, User user);
 
-    List <Task> findAllByUsersWithAccessContaining(User user);
+    List<Task> findAllByUsersWithAccessContaining(User user);
 }
