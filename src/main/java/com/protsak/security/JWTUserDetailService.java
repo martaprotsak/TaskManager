@@ -1,7 +1,7 @@
 package com.protsak.security;
 
 import com.protsak.entity.User;
-import com.protsak.exception.ConstantMessage;
+import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.NotFoundException;
 import com.protsak.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
