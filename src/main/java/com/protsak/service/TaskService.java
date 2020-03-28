@@ -5,5 +5,8 @@ import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 
 public interface TaskService {
+
      TaskDto save(NewTaskDto task);
+
+     TaskDto edit(TaskDto taskDto);
 }

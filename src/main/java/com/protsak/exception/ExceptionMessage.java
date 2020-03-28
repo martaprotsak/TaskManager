@@ -8,5 +8,6 @@ public class ExceptionMessage {
     public static final String USER_NOT_FOUND_BY_EMAIL = "User doesn't exist by this email: ";
     public static final String INCORRECT_PASSWORD = "Incorrect password ";
     public static final String JWT_TOKEN_IS_EXPIRED = "Please, try to login in your account again";
+    public static final String TASK_NOT_FOUND = "Task not found with current id in user list";
 
 }
