@@ -3,7 +3,7 @@ package com.protsak.controller;
 
 import com.protsak.dto.AuthenticationDto;
 import com.protsak.entity.User;
-import com.protsak.exception.ConstantMessage;
+import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.InvalidPasswordException;
 import com.protsak.exception.NotFoundException;
 import com.protsak.security.CookieProvider;
