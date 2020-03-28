@@ -2,11 +2,13 @@ package com.protsak.service.implementation;
 
 import com.protsak.dto.NewTaskDto;
 import com.protsak.dto.ShareTaskDto;
+import com.protsak.dto.ShowTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 import com.protsak.entity.User;
 import com.protsak.exception.ConstantMessage;
 import com.protsak.exception.NotFoundException;
+import com.protsak.mapper.ShowTaskMapper;
 import com.protsak.mapper.TaskMapper;
 import com.protsak.repository.TaskRepository;
 import com.protsak.service.TaskService;
@@ -20,13 +22,15 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskMapper taskMapper;
+    private final ShowTaskMapper showTaskMapper;
     private UserServiceImpl userService;
     private TaskRepository taskRepository;
 
-    public TaskServiceImpl(TaskMapper taskMapper, UserServiceImpl userService, TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskMapper taskMapper, UserServiceImpl userService, TaskRepository taskRepository, ShowTaskMapper showTaskMapper) {
         this.taskMapper = taskMapper;
         this.userService = userService;
         this.taskRepository = taskRepository;
+        this.showTaskMapper = showTaskMapper;
     }
 
     @Override
@@ -81,5 +85,10 @@ public class TaskServiceImpl implements TaskService {
             return ConstantMessage.TASK_WAS_DELETED;
         }
         return ConstantMessage.TASK_NOT_FOUND;
+    }
+
+    @Override
+    public List<ShowTaskDto> taskList(User user) {
+        return showTaskMapper.convertToListDto(taskRepository.findAllByUsersWithAccessContaining(user));
     }
 }
