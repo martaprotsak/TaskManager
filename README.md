@@ -1,7 +1,7 @@
 # TaskManager
 
 This project is completed using the following technologies: Java 8, Spring Boot, Spring Data, Apache Maven, MongoDb. There are 2 entities. User has the following fields: id, username, email and password. Task has such fields as id, title, description, lastModifiedDate, author and list of users, who also have access to this task.
-The following security type is JWT-based.
+The following security type is JWT-based. 
 
 ## The following API:
 - Register in a system;
@@ -20,4 +20,4 @@ The following security type is JWT-based.
 4) Import TaskManager.postman_collection.json to Postman
 5) Test it
 
-At the start of the application the database is empty. So it is recommended to register at least 2 users and test project in offered order. Also after saving the task you will be given its id, which you can copy and insert as param in request body or url in the next requests.
+At the start of the application the database is empty. So it is recommended to register at least 2 users and test project in offered order. Also after saving the task you will be given its id, which you can copy and insert as param in request body or url in the next requests. Last version is in branch develop, where such issue is fixed.
