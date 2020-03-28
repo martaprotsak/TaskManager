@@ -5,10 +5,9 @@ import com.protsak.dto.ShareTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.service.TaskService;
 import com.protsak.service.implementation.TaskServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/task")
@@ -31,7 +30,12 @@ public class TaskController {
     }
 
     @PostMapping("/share")
-    public String shareTask (@RequestBody ShareTaskDto dto){
+    public String shareTask(@RequestBody ShareTaskDto dto) {
         return taskService.share(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable String id) {
+        return new ResponseEntity<>(taskService.delete(id), HttpStatus.OK);
     }
 }

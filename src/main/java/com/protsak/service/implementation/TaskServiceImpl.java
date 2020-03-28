@@ -57,13 +57,28 @@ public class TaskServiceImpl implements TaskService {
         if (task != null) {
 
             User newUser = userService.findUserByEmail(dto.getEmail());
-            if(newUser == null) return ConstantMessage.USER_NOT_FOUND_BY_EMAIL + dto.getEmail();
+            if (newUser == null) return ConstantMessage.USER_NOT_FOUND_BY_EMAIL + dto.getEmail();
 
             List<User> userList = task.getUsersWithAccess();
             userList.add(newUser);
             task.setUsersWithAccess(userList);
             taskRepository.save(task);
             return ConstantMessage.TASK_WAS_ADDED + dto.getEmail();
+        }
+        return ConstantMessage.TASK_NOT_FOUND;
+    }
+
+    @Override
+    public String delete(String id) {
+        Task task = taskRepository.findByIdAndUsersWithAccessContaining(id, userService.getCurrentUser());
+        if (task != null) {
+            List<User> userList = task.getUsersWithAccess();
+            if (userList.size() > 1) {
+                userList.remove(userService.getCurrentUser());
+                task.setUsersWithAccess(userList);
+                taskRepository.save(task);
+            } else taskRepository.delete(task);
+            return ConstantMessage.TASK_WAS_DELETED;
         }
         return ConstantMessage.TASK_NOT_FOUND;
     }
