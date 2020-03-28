@@ -1,6 +1,7 @@
 package com.protsak.controller;
 
 import com.protsak.dto.NewTaskDto;
+import com.protsak.dto.ShareTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.service.TaskService;
 import com.protsak.service.implementation.TaskServiceImpl;
@@ -27,5 +28,10 @@ public class TaskController {
     @PostMapping("/update")
     public TaskDto update(@RequestBody TaskDto taskDto) {
         return taskService.edit(taskDto);
+    }
+
+    @PostMapping("/share")
+    public String shareTask (@RequestBody ShareTaskDto dto){
+        return taskService.share(dto);
     }
 }
