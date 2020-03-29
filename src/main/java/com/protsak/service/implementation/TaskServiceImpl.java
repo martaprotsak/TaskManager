@@ -6,6 +6,7 @@ import com.protsak.dto.ShowTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 import com.protsak.entity.User;
+import com.protsak.service.UserService;
 import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.NotFoundException;
 import com.protsak.mapper.ShowTaskMapper;
@@ -23,10 +24,10 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskMapper taskMapper;
     private final ShowTaskMapper showTaskMapper;
-    private UserServiceImpl userService;
+    private UserService userService;
     private TaskRepository taskRepository;
 
-    public TaskServiceImpl(TaskMapper taskMapper, UserServiceImpl userService, TaskRepository taskRepository, ShowTaskMapper showTaskMapper) {
+    public TaskServiceImpl(TaskMapper taskMapper, UserService userService, TaskRepository taskRepository, ShowTaskMapper showTaskMapper) {
         this.taskMapper = taskMapper;
         this.userService = userService;
         this.taskRepository = taskRepository;
