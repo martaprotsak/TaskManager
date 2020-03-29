@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService {
         }
         if (!(userRepository.findUserByEmail(userRegistrationDto.getEmail()) == null)) {
             throw new UserAlreadyExistException(ConstantMessage.USER_ALREADY_EXIST
-                    + userRegistrationDto.getEmail()
-                    + "!!!");
+                    + userRegistrationDto.getEmail());
         }
         User user = userRegistrationMapper.convertToEntity(userRegistrationDto);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));

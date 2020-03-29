@@ -4,6 +4,7 @@ import com.protsak.dto.ShareTaskDto;
 import com.protsak.dto.TaskDto;
 import com.protsak.entity.Task;
 import com.protsak.entity.User;
+import com.protsak.service.UserService;
 import com.protsak.utils.ConstantMessage;
 import com.protsak.exception.NotFoundException;
 import com.protsak.mapper.TaskMapper;
@@ -19,10 +20,10 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskMapper taskMapper;
-    private UserServiceImpl userService;
+    private UserService userService;
     private TaskRepository taskRepository;
 
-    public TaskServiceImpl(TaskMapper taskMapper, UserServiceImpl userService, TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskMapper taskMapper, UserService userService, TaskRepository taskRepository) {
         this.taskMapper = taskMapper;
         this.userService = userService;
         this.taskRepository = taskRepository;
